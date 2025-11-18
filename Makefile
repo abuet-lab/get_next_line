@@ -6,7 +6,7 @@
 #    By: abuet <abuet@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/11 11:34:31 by abuet             #+#    #+#              #
-#    Updated: 2025/11/11 11:44:27 by abuet            ###   ########.fr        #
+#    Updated: 2025/11/18 14:49:56 by abuet            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ HEADER = get_next_line.h
 
 OPTION = -c -I $(HEADER)
 
-SRC_FILES = get_next_line.c get_next_line_utils.c\
+SRC_FILES = get_next_line.c get_next_line_utils.c main.c\
+
 
 OBJ_FILES =  $(SRC_FILES:.c=.o)
 
@@ -47,7 +48,7 @@ fclean: clean
 re: fclean all
 
 launch : all 
-	@$(CC) $(NAME)
-	@./a.out
-	@make fclean
+	$(CC) $(NAME)
+	./a.out
+
 .PHONY: all clean fclean launch re
