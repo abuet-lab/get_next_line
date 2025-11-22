@@ -4,7 +4,6 @@ int main (void)
 {
 	int test;
 	char *tab;
-	char *t;
 	//int i = 0;
 
 	test = open("test.txt", O_RDONLY);
@@ -14,12 +13,15 @@ int main (void)
 		return (0);
 	}
 	
-	
-	tab = get_next_line(test);
-	printf("test : %s", tab);
-	t = get_next_line(test);
-	printf("test : %s", t);
+	while (1)
+	{
+		tab = get_next_line(test);
+		printf("test : %s", tab);
+		free(tab);
+		if (tab == NULL)
+			break;
+	}
 	close (test);
-	
+	return(0);
 	
 }
