@@ -6,7 +6,7 @@
 /*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:36 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/22 16:17:04 by abuet            ###   ########.fr       */
+/*   Updated: 2025/11/22 18:19:22 by abuet            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,21 @@ static size_t search_new_line(char *tab)
 	return (0);
 }
 
-static char *return_tab(char *tab)
+static char *return_tab(char *tab, int i)
 {
 	char *return_tab;
 	size_t size_tab;
 
 	size_tab = search_new_line(tab);
-	return_tab = malloc((size_tab + 1)* sizeof(char));
+	return_tab = malloc((size_tab + 2)* sizeof(char));
 	if (!return_tab)
 		return(NULL);
-	ft_strlcpy(return_tab, tab, size_tab);
-	return_tab[size_tab - 1] = '\n';
+	ft_strlcpy(return_tab, tab, size_tab + 1);
+	if (i == 1)
+	{
+	 	free(tab);
+	 	tab = NULL;
+	}
 	return (return_tab);
 }
 static char *ft_copy(char *buffer, char *final_tab, size_t size_malloc)
@@ -51,6 +55,8 @@ static char *ft_copy(char *buffer, char *final_tab, size_t size_malloc)
 		return (NULL);
 	ft_strlcpy(temp, final_tab, size_malloc);
 	ft_concat(temp, buffer, size_malloc);
+	free(final_tab);
+	final_tab = NULL;
 	return (temp);
 }
 
@@ -62,23 +68,23 @@ char *get_next_line(int fd)
 	static size_t	size_malloc = 0;
 
 	if (size_malloc == 0)
-		final_tab = malloc(2);
+		final_tab = malloc(1), final_tab[0] = '\0';
 	final_tab += search_new_line(final_tab);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (0);
+		return (NULL);
 	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
-		buffer[bytes_read + 1] = '\0';
+		buffer[bytes_read] = '\0';
 		size_malloc += bytes_read;
 		final_tab = ft_copy(buffer, final_tab, size_malloc);
 		if (search_new_line(final_tab) != 0)
 			return(free(buffer), size_malloc -= search_new_line(final_tab),
-			 return_tab(final_tab));
+			 return_tab(final_tab, 0));
 	}
 	if (bytes_read == 0 && ((search_new_line(final_tab) -1) == size_malloc))
-		return(free(buffer), final_tab);
+		return(free(buffer), return_tab(final_tab, 1));
 	if (search_new_line(final_tab) != 0)
-		return(free(buffer), return_tab(final_tab));
+		return(free(buffer), return_tab(final_tab, 0));
 	return (NULL);
 }
