@@ -6,7 +6,7 @@
 /*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:36 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/22 18:19:22 by abuet            ###   ########.fr       */
+/*   Updated: 2025/11/22 19:03:00 by abuet            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static size_t search_new_line(char *tab)
 			return (i + 1);
 		i++;
 	}
-	if (tab[i] == '\0')
-		return (i + 1);
 	return (0);
 }
 
@@ -68,8 +66,12 @@ char *get_next_line(int fd)
 	static size_t	size_malloc = 0;
 
 	if (size_malloc == 0)
-		final_tab = malloc(1), final_tab[0] = '\0';
-	final_tab += search_new_line(final_tab);
+	{
+		final_tab = malloc(1);
+		if (!final_tab)
+			return (NULL);
+		final_tab[0] = '\0';
+	}
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
@@ -78,11 +80,11 @@ char *get_next_line(int fd)
 		buffer[bytes_read] = '\0';
 		size_malloc += bytes_read;
 		final_tab = ft_copy(buffer, final_tab, size_malloc);
-		if (search_new_line(final_tab) != 0)
+		if (search_new_line(final_tab) != 0 )
 			return(free(buffer), size_malloc -= search_new_line(final_tab),
 			 return_tab(final_tab, 0));
 	}
-	if (bytes_read == 0 && ((search_new_line(final_tab) -1) == size_malloc))
+	if (bytes_read == 0 && ((search_new_line(final_tab) - 1) == size_malloc))
 		return(free(buffer), return_tab(final_tab, 1));
 	if (search_new_line(final_tab) != 0)
 		return(free(buffer), return_tab(final_tab, 0));
