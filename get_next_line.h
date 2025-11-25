@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:40 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/22 15:59:59 by abuet            ###   ########.fr       */
+/*   Updated: 2025/11/24 20:35:17 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-# ifndef  BUFFER_SIZE
-#  define BUFFER_SIZE 100
+# ifndef  BUF_SZ
+#  define BUF_SZ 100
 # endif
 char	*get_next_line(int fd);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);

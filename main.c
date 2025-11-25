@@ -12,9 +12,6 @@ int main (void)
 		printf("%s\n", "erreur lors que l ouverture");
 		return (0);
 	}
-	
-	
-	
 	tab = get_next_line(test);
 	printf("test : %s", tab);
 	free(tab);
