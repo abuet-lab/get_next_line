@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:32 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/22 17:36:35 by abuet            ###   ########.fr       */
+/*   Updated: 2025/11/30 13:56:06 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,15 @@ void	ft_concat(char *s1, char *s2, size_t size)
 		t++;
 	}
 	s1[i + t] = '\0';
+}
+
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 

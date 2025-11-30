@@ -6,7 +6,7 @@
 /*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:36 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/25 13:48:45 by antoinebuet      ###   ########.fr       */
+/*   Updated: 2025/11/30 14:22:31 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,47 +28,59 @@ static size_t search_new_line(char *tab)
 	return (0);
 }
 
-static char *return_tab(char *tab, size_t size_malloc)
+static char *return_tab(char *tab)
 {
 	char *return_tab;
 	size_t size_tab;
 
 	size_tab = search_new_line(tab);
-	return_tab = malloc((size_tab + 2)* sizeof(char));
+	return_tab = malloc((size_tab + 1) * sizeof(char));
 	if (!return_tab)
 		return(NULL);
 	ft_strlcpy(return_tab, tab, size_tab + 1);
-	free(tab);
-	tab = NULL;
-	size_malloc -= size_tab;
-	tab = malloc((size_malloc + 1) * sizeof(char));
-	if(!tab)
-		return(NULL);
-	ft_strlcpy(tab, return_tab + size_tab, size_malloc + 1);
-	return_tab[size_tab] = '\0';
 	return (return_tab);
 }
-static char *ft_copy(char *buffer, char *final_tab, size_t size_malloc)
+static char *ft_copy(char *buffer, char *final_tab)
 {
-	char *temp;
+	size_t	size_malloc;
+	char	*temp;
+
+	size_malloc = ft_strlen(final_tab) + ft_strlen(buffer);
 	temp = malloc((size_malloc + 1) * sizeof(char));
 	if (!temp)
 		return (NULL);
-	ft_strlcpy(temp, final_tab, size_malloc);
+	ft_strlcpy(temp, final_tab, ft_strlen(final_tab) + 1);
 	ft_concat(temp, buffer, size_malloc);
 	free(final_tab);
 	final_tab = NULL;
 	return (temp);
 }
+static char *clean_tab(char *final_tab)
+{
+	size_t	i;
+	size_t	len;
+	char	*new_tab;
+
+	i = search_new_line(final_tab);
+	if (i == 0)
+		return final_tab;
+	len = ft_strlen(final_tab + i);
+	new_tab = malloc(len + 1);
+	if (!new_tab)
+		return (NULL);
+	ft_strlcpy(new_tab, final_tab + i, len + 1);
+	free(final_tab);
+	return (new_tab);
+}
 
 char *get_next_line(int fd)
 {
-	char			*buffer;
-	size_t			bt_rd;
-	static char		*final_tab;
-	static size_t	size_malloc = 0;
+	char		*buffer;
+	size_t		bt_rd;
+	static char	*final_tab;
+	char		*re_tab;
 
-	if (size_malloc == 0)
+	if (!final_tab)
 	{
 		final_tab = malloc(1);
 		if (!final_tab)
@@ -78,17 +90,18 @@ char *get_next_line(int fd)
 	buffer = malloc((BUF_SZ + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	while (((bt_rd = read(fd, buffer, BUF_SZ)) > 0))
+	while (search_new_line(final_tab) == 0 && ((bt_rd = read(fd, buffer, BUF_SZ)) > 0))
 	{
 		buffer[bt_rd] = '\0';
-		size_malloc += bt_rd;
-		final_tab = ft_copy(buffer, final_tab,2 size_malloc);
-		if ((search_new_line(final_tab) != 0))
-			break;
+		final_tab = ft_copy(buffer, final_tab);
+		//if ((search_new_line(final_tab) != 0))
+		//	break;
 	}
 	if (bt_rd < 0)
 		return (NULL);
 	if (bt_rd == 0 && search_new_line(final_tab) == 0)
-		return(free(buffer), final_tab);
-	return(free(buffer), return_tab(final_tab, size_malloc));
+		return (free(buffer), final_tab);
+	re_tab = return_tab(final_tab);
+	final_tab = clean_tab(final_tab);
+	return (free(buffer), re_tab);
 }

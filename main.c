@@ -17,10 +17,11 @@ int main (void)
 	free(tab);
 	tab = get_next_line(test);
 	printf("test : %s", tab);
-	free(tab);
-	tab = get_next_line(test);
-	free(tab);
-	close (test);
-	return(0);
+	// free(tab);
+	// tab = get_next_line(test);
+	// printf("test : %s", tab);
+	// free(tab);
+	// close (test);
+	// return(0);
 	
 }
