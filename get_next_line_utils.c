@@ -6,7 +6,7 @@
 /*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:32 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/30 13:56:06 by antoinebuet      ###   ########.fr       */
+/*   Updated: 2025/11/30 21:10:45 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,11 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+char	*ft_initialize(char *final_tab)
+{
+	final_tab = malloc(1);
+	if (!final_tab)
+		return (NULL);
+	final_tab[0] = '\0';
+	return (final_tab);
+}
