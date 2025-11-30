@@ -6,7 +6,7 @@
 /*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:36 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/30 14:22:31 by antoinebuet      ###   ########.fr       */
+/*   Updated: 2025/11/30 14:37:05 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,8 @@ char *get_next_line(int fd)
 	{
 		buffer[bt_rd] = '\0';
 		final_tab = ft_copy(buffer, final_tab);
-		//if ((search_new_line(final_tab) != 0))
-		//	break;
 	}
-	if (bt_rd < 0)
+	if (bt_rd < 0 || final_tab[0] == '\0')
 		return (NULL);
 	if (bt_rd == 0 && search_new_line(final_tab) == 0)
 		return (free(buffer), final_tab);
