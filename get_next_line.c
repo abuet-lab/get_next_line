@@ -6,7 +6,7 @@
 /*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:36 by abuet             #+#    #+#             */
-/*   Updated: 2025/12/02 13:44:18 by abuet            ###   ########.fr       */
+/*   Updated: 2025/12/02 15:00:25 by abuet            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 		final_tab = ft_initialize(final_tab);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return(NULL);
 	while (search_new_line(final_tab) == 0 && bt_rd > 0)
 	{
 		bt_rd = read(fd, buffer, BUFFER_SIZE);
@@ -96,6 +96,8 @@ char	*get_next_line(int fd)
 			return(ft_free(&buffer, &final_tab), NULL);
 		buffer[bt_rd] = '\0';
 		final_tab = ft_copy(buffer, &final_tab);
+		if (!final_tab)
+			return(ft_free(&buffer, &final_tab), NULL);
 	}
 	if (final_tab[0] == '\0')
 		return(ft_free(&buffer, &final_tab), NULL);
