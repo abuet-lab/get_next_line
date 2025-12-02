@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
+/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:32 by abuet             #+#    #+#             */
-/*   Updated: 2025/11/30 21:10:45 by antoinebuet      ###   ########.fr       */
+/*   Updated: 2025/12/02 14:21:08 by abuet            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,11 @@ char	*ft_initialize(char *final_tab)
 		return (NULL);
 	final_tab[0] = '\0';
 	return (final_tab);
+}
+
+void ft_free(char **buffer, char **final_tab)
+{
+	free(*buffer);
+	free(*final_tab);
+	*final_tab = NULL;
 }
