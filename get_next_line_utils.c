@@ -3,74 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:32 by abuet             #+#    #+#             */
-/*   Updated: 2025/12/02 14:21:08 by abuet            ###   ########.fr       */
+/*   Updated: 2025/12/05 20:39:06 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	size;
-
-	i = 0;
-	size = 0;
-	while (src[size])
-		size++;
-	if (dstsize == 0)
-		return (size);
-	while (i < dstsize - 1 && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (size);
-}
-
-void	ft_concat(char *s1, char *s2, size_t size)
-{
-	size_t	i;
-	size_t	t;
-
-	i = 0;
-	t = 0;
-	while (s1[i] && (t + i) < size)
-		i++;
-	while (s2[t] && (t + i) < size)
-	{
-		s1[i + t] = s2[t];
-		t++;
-	}
-	s1[i + t] = '\0';
-}
-
-size_t	ft_strlen(const char *s)
+int ft_strlen(char *tab)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (tab[i])
 		i++;
 	return (i);
 }
 
-char	*ft_initialize(char *final_tab)
+char *ft_strjoin(char *s1,char *s2)
 {
-	final_tab = malloc(1);
-	if (!final_tab)
+	char *join;
+	int i;
+	int j;
+
+	if (!s1 || !s2 )
 		return (NULL);
-	final_tab[0] = '\0';
-	return (final_tab);
+	join = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!join)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		join[i + j] = s2[j];
+		j++;
+	}
+	return (join);
 }
 
-void ft_free(char **buffer, char **final_tab)
+int search_new_line(char *tab)
 {
-	free(*buffer);
-	free(*final_tab);
-	*final_tab = NULL;
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (tab[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
+/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:40 by abuet             #+#    #+#             */
-/*   Updated: 2025/12/02 13:43:59 by abuet            ###   ########.fr       */
+/*   Updated: 2025/12/05 20:17:07 by antoinebuet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@
 # endif
 
 char	*get_next_line(int fd);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-void	ft_concat(char *s1, char *s2, size_t size);
-int		ft_search_end_line(char *final_tab);
-size_t	ft_strlen(const char *s);
-char	*ft_initialize(char *final_tab);
-void	ft_free(char **buffer, char **final_tab);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_strlen(char *tab);
+int		search_new_line(char *tab);
+
 
 #endif
