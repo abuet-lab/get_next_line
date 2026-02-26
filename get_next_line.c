@@ -3,37 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
+/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:36 by abuet             #+#    #+#             */
-/*   Updated: 2025/12/09 11:51:32 by antoinebuet      ###   ########.fr       */
+/*   Updated: 2025/12/09 18:38:06 by abuet            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *ft_remove_line(char *tab)
+static char	*ft_remove_line(char *tab)
 {
-	char *new_tab;
-	int i;
-	int j;
+	char	*new_tab;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
 	while (tab[i] && tab[i] != '\n')
 		i++;
-	if (!tab)
+	if (!tab[i])
 		return (free(tab), NULL);
 	new_tab = malloc((ft_strlen(tab) - i + 1) * sizeof(char));
 	if (!new_tab)
-		return(NULL);
+		return (NULL);
 	i++;
-	while(tab[i])
+	while (tab[i])
 		new_tab[j++] = tab[i++];
 	new_tab[j] = '\0';
-	return(free(tab), new_tab);
+	return (free(tab), new_tab);
 }
-static char *ft_print_tab(char *tab)
+
+static char	*ft_print_tab(char *tab)
 {
 	char	*new;
 	int		i;
@@ -61,41 +62,32 @@ static char *ft_print_tab(char *tab)
 	return (new);
 }
 
-static char *ft_alloc_tab(char *stat,int fd)
+static char	*ft_alloc_tab(char *stat, int fd)
 {
-	char *buffer;
-	ssize_t bytes_read;
+	char	*buffer;
+	ssize_t	bytes_read;
 
 	bytes_read = 1;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return(NULL);
-	if (!stat)
-	{
-		stat = malloc(1);
-		if (!stat)
-			return (free(buffer), NULL);
-		stat[0] = '\0';
-	}
-	while (search_new_line(stat) && bytes_read > 0)
+		return (NULL);
+	while ((!ft_strchr(stat, '\n')) && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return(free(buffer), free(stat), NULL);
+			return (free(buffer), free(stat), NULL);
 		buffer[bytes_read] = '\0';
 		stat = ft_strjoin(stat, buffer);
-		if (!stat)
-			return (free(buffer), NULL);
 	}
 	return (free(buffer), stat);
 }
 
 char	*get_next_line(int fd)
 {
-	static char  *stat;
-	char *print;
+	static char	*stat;
+	char		*print;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	stat = ft_alloc_tab(stat, fd);
 	if (!stat)

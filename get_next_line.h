@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoinebuet <antoinebuet@student.42.fr>    +#+  +:+       +#+        */
+/*   By: abuet <abuet@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:37:40 by abuet             #+#    #+#             */
-/*   Updated: 2025/12/09 11:50:53 by antoinebuet      ###   ########.fr       */
+/*   Updated: 2025/12/09 18:35:52 by abuet            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strlen(char *tab);
-int		search_new_line(char *tab);
-
+size_t	ft_strlen(char *tab);
+char	*ft_strchr(char *str, int c);
 
 #endif
